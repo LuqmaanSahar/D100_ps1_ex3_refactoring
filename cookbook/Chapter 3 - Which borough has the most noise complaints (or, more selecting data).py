@@ -1,6 +1,7 @@
 # %%
 import pandas as pd
 import matplotlib.pyplot as plt
+import polars as pl
 
 
 # Make the graphs a bit prettier, and bigger
@@ -9,13 +10,17 @@ plt.rcParams["figure.figsize"] = (15, 5)
 
 # This is necessary to show lots of columns in pandas 0.12.
 # Not necessary in pandas 0.13.
-pd.set_option("display.width", 5000)
-pd.set_option("display.max_columns", 60)
+# pd.set_option("display.width", 5000)
+# pd.set_option("display.max_columns", 60)
+
+pl.Config.set_tbl_width_chars(5000)
+pl.Config.set_tbl_cols(60)
 
 # %%
 # Let's continue with our NYC 311 service requests example.
 # because of mixed types we specify dtype to prevent any errors
-complaints = pd.read_csv("../data/311-service-requests.csv", dtype="unicode")
+# complaints = pd.read_csv("../data/311-service-requests.csv", dtype="unicode")
+pl_complaints = pl.read_csv("../data/311-service-requests.csv", dtypes=pl.Utf8)
 
 # %%
 # TODO: rewrite the above using the polars library (you might have to import it above) and call the data frame pl_complaints
